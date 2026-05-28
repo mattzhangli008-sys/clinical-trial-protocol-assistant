@@ -1,79 +1,80 @@
-# Clinical Trial Protocol Assistant
+# 临床试验方案助手
 
-A Codex skill for creating and reviewing clinical trial protocols. It is designed for IITs, pre-market drug/device studies, phase IV/post-marketing studies, and RWS/RWE protocols.
+[English README](README.en.md)
 
-The skill uses a gated workflow: it collects only the minimum necessary information first, proposes a protocol section outline, asks the user to confirm included sections, then drafts or reviews section by section.
+这是一个用于创建和审查临床试验方案的 Codex Skill，适用于研究者发起研究（IIT）、药物/器械注册上市前临床试验、上市后四期研究，以及真实世界研究/真实世界证据（RWS/RWE）方案。
 
-## Capabilities
+本 Skill 的核心思路是“先收集必要信息，再设计章节，再逐章生成或审查”。它不会在用户只给出一个题目时直接生成完整方案，而是先通过 P0/P1/P2 信息门和章节确认流程，把方案结构、关键假设和缺失信息理清楚。
 
-- Create new clinical trial protocol outlines and drafts.
-- Review existing protocol documents without wholesale rewriting.
-- Classify protocol sections as necessary, recommended, optional, or not recommended now.
-- Use P0/P1/P2 information gates at the global and section levels.
-- Extract user-provided materials from Word, Excel, PowerPoint, PDF, CSV/TSV, text, and Markdown files.
-- Use uploaded materials to answer later questions and guide drafting.
-- Retrieve supporting evidence from PubMed, ClinicalTrials.gov, and openFDA labels.
-- Unify Word document styles for protocol outputs.
+## 主要能力
 
-## Installation
+- 创建临床试验方案目录和正文草稿。
+- 审查已有临床试验方案，并尽量避免大规模重写用户原文。
+- 根据研究类型将章节分为必要、推荐、可选和暂不建议纳入。
+- 使用全局和章节级 P0/P1/P2 信息门控制提问节奏。
+- 从 Word、Excel、PowerPoint、PDF、CSV/TSV、文本和 Markdown 文件中抽取材料。
+- 将用户上传材料用于回答后续问题，并作为正文撰写和审查的依据。
+- 在需要时检索 PubMed、ClinicalTrials.gov 和 openFDA label 作为外部证据来源。
+- 对生成或审查后的 Word 文档做全局样式统一。
 
-Install this skill from the GitHub repository:
+## 安装
 
 ```bash
 codex skills install https://github.com/mattzhangli008-sys/clinical-trial-protocol-assistant.git
 ```
 
-For heavy file extraction, install Python dependencies from the skill directory:
+如需进行较重的文件抽取，进入 Skill 目录后安装 Python 依赖：
 
 ```bash
 python -m pip install -r requirements.txt
 ```
 
-## Typical Workflow
+## 典型流程
 
-### Create Mode
+### 新建方案模式
 
-1. The skill asks for the research title/question, broad study nature, and whether existing materials are available.
-2. It extracts any uploaded materials into a material index.
-3. It proposes necessary, recommended, optional, and currently not recommended sections.
-4. After the user confirms the section scope, it creates an execution plan.
-5. It collects section-level P0/P1/P2 information and drafts one section at a time.
-6. After all confirmed sections are complete, it runs cross-section consistency checks and can produce a styled Word document.
+1. 先询问研究题目/临床问题、研究性质大类，以及是否有已有材料。
+2. 如果用户上传 Word、Excel、PPT、PDF 等材料，先抽取为材料索引。
+3. 根据研究画像推荐必要、推荐、可选和暂不建议章节。
+4. 用户确认要纳入哪些章节后，形成执行计划。
+5. 对每个章节分别收集 P0/P1/P2 信息，再逐章生成。
+6. 所有章节确认后，进行跨章节一致性检查，并可生成统一样式的 Word 文件。
 
-### Review Mode
+### 审查模式
 
-1. The skill extracts the existing protocol and any supporting materials.
-2. It builds a document profile and checks section coverage.
-3. It identifies missing necessary sections and asks whether to include recommended or optional sections.
-4. It creates a review execution plan.
-5. It reviews each section using extracted information, external evidence when needed, and restrained suggested edits.
+1. 抽取已有方案和辅助材料。
+2. 形成文档画像，并检查章节覆盖情况。
+3. 识别缺失的必要章节，并询问是否纳入推荐或可选章节。
+4. 形成审查执行计划。
+5. 按章节进行审查，结合文档原文、用户补充信息和必要的外部证据。
+6. 输出问题、原文证据、风险说明、修改建议和小范围建议改写。
 
-## Material Extraction
+## 材料抽取
 
-The main extraction script is:
+主要脚本：
 
 ```bash
 python scripts/extract_materials.py file1.docx file2.xlsx file3.pdf --out material_index.json
 ```
 
-Optional Markdown view:
+可选生成整篇 Markdown 视图：
 
 ```bash
 python scripts/extract_materials.py protocol.docx --include-markdown --out material_index.json
 ```
 
-The extractor prefers stronger libraries when available:
+抽取脚本会优先使用更强的格式处理库：
 
-- `python-docx` for DOCX paragraphs and tables.
-- `openpyxl` for XLSX/XLSM sheets.
-- `python-pptx` for PPTX slide text and tables.
-- `pdfplumber`, `PyMuPDF`, then `pypdf` for PDF extraction.
-- `markitdown` for optional whole-document Markdown conversion.
+- `python-docx`：抽取 DOCX 段落和表格。
+- `openpyxl`：抽取 XLSX/XLSM 工作表。
+- `python-pptx`：抽取 PPTX 幻灯片文本和表格。
+- `pdfplumber`、`PyMuPDF`、`pypdf`：按顺序用于 PDF 抽取。
+- `markitdown`：可选生成整篇文档的 Markdown 视图。
 
-If a dependency is unavailable, the script records the fallback or error in the output index.
+如果某个依赖不可用，脚本会在输出索引中记录降级方式或错误信息。
 
-## Important Notes
+## 重要说明
 
-This skill is intended to support clinical protocol drafting and review. It does not replace medical, statistical, ethical, regulatory, or legal review by qualified professionals.
+本 Skill 用于辅助临床试验方案撰写和审查，不能替代医学、统计、伦理、法规或法律专业人员的正式审核。
 
-For medical, regulatory, endpoint, safety, sample-size, or RWE claims, the skill should use external evidence or user-provided materials instead of relying only on model memory.
+对于医学、法规、终点、安全性、样本量、真实世界研究方法等关键内容，应结合外部证据或用户提供材料，不应只依赖模型记忆。

@@ -1,0 +1,26 @@
+profile_name: clinical_protocol_cn_default
+page:
+  size: A4
+  margins_cm:
+    top: 2.54
+    bottom: 2.54
+    left: 2.8
+    right: 2.8
+fonts:
+  chinese: 宋体
+  latin: Times New Roman
+  body_size_pt: 10.5
+  heading_font: 黑体
+headings:
+  numbering: true
+  max_depth: 4
+tables:
+  repeat_header: true
+  allow_row_split: true
+  header_shading: light_gray
+placeholders:
+  tokens:
+    - "[待确认]"
+    - "[TBD]"
+    - "[需用户确认]"
+  style: yellow_highlight

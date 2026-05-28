@@ -1,0 +1,7 @@
+interface:
+  display_name: "Clinical Trial Protocol Assistant"
+  short_description: "Create, review, and format clinical trial protocols"
+  default_prompt: "Use $clinical-trial-protocol-assistant to review this clinical trial protocol and produce a section-by-section plan."
+
+policy:
+  allow_implicit_invocation: true

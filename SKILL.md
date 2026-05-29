@@ -19,6 +19,15 @@ Use external evidence and Word tooling when needed. Do not rely only on model me
 - When drafting protocol content in Chinese, use Chinese numeric section headings such as `一、二、三、四` for generated protocol sections and subsections. Do not use `A、B、C、D` as generated section numbering. Internal module IDs such as `A1`, `B1`, and `C2` may be used only in planning tables or workflow status blocks.
 - If generated content uses literature or external records retrieved during the task, add citation markers immediately after the supported sentence or paragraph, using bracketed numeric markers such as `[1]`, `[2]`. Include a matching references list or evidence record in the same response or final document section. Do not add citation markers for unsupported claims, and do not fabricate citations.
 
+## Protocol Markdown Source
+
+In create mode, maintain one protocol-specific Markdown file as the source of truth for generated content.
+
+- Create or identify the `protocol_md_path` when building the execution plan. If the user did not provide a path, create a clear filename from the protocol title, such as `<sanitized_protocol_title>_protocol.md`, in the working output directory.
+- After the user confirms a section's content, immediately write or update that exact confirmed section in the protocol Markdown file. If the user later revises a confirmed section, replace that section in the Markdown file instead of appending a conflicting copy.
+- The Markdown file must preserve confirmed headings, placeholders such as `[待确认]`, tables, citation markers, and references/evidence notes.
+- Cross-section consistency checks and final Word generation must use the complete protocol Markdown file as the authoritative source. Do not regenerate final Word content from model memory or independent judgment.
+
 ## First Decision
 
 Determine the mode:
@@ -70,8 +79,9 @@ Do not generate a full protocol immediately after the user confirms the outline.
    - If P2 is missing, draft with `[待确认]` only if acceptable.
 7. Check `external_data_needs` for the section. Retrieve evidence when required or recommended.
 8. Draft the section with citation markers for any searched literature or external records used, then ask the user to confirm, revise, or regenerate.
-9. After all included sections are confirmed, run cross-section consistency checks.
-10. If delivering Word, run Word style unification.
+9. Once the user confirms the section, save the confirmed content into the protocol Markdown file before moving to the next section.
+10. After all included sections are confirmed, run cross-section consistency checks against the protocol Markdown file.
+11. If delivering Word, generate it from the complete protocol Markdown file, then run Word style unification.
 
 ## Review Mode
 
@@ -100,6 +110,8 @@ This skill can read and edit Word documents. Prefer scripts for repeatable docum
 
 For advanced Word creation, rendering, comments, or redlines, also use the built-in `documents` skill/plugin instructions. Preserve original documents; write modified files to a new output path.
 
+In create mode, final DOCX content must be converted or rendered from the complete confirmed protocol Markdown file. Use the model only for formatting decisions, consistency notes, and document mechanics; do not rewrite or invent protocol content while creating Word.
+
 When running these scripts in Codex Desktop, prefer the bundled workspace Python from `load_workspace_dependencies`; system Python may not include all requirements. For published or external installs, create an environment and install `requirements.txt`.
 
 ## External Data Scripts
@@ -120,6 +132,7 @@ After outline confirmation in create mode:
 
 ```yaml
 execution_plan:
+  protocol_md_path: ""
   sections:
     - id: ""
       title: ""

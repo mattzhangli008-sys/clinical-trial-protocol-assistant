@@ -16,7 +16,7 @@ Hard gate: after the user confirms necessary/recommended/optional sections, do n
    - optional sections
    - not recommended now
 4. User confirms section scope.
-5. Build execution plan.
+5. Build execution plan and create or identify the protocol Markdown source file (`protocol_md_path`).
 6. For each section:
    - check whether uploaded materials answer this section's P0/P1/P2 questions
    - run section information gate
@@ -26,8 +26,9 @@ Hard gate: after the user confirms necessary/recommended/optional sections, do n
    - retrieve required/recommended evidence
    - draft with Chinese numeric headings (`一、二、三、四`) and inline citation markers for retrieved evidence
    - user confirms/revises
-7. Cross-section consistency check.
-8. Word style unification if delivering DOCX.
+   - immediately write the confirmed section into the protocol Markdown source file
+7. Cross-section consistency check using the complete protocol Markdown source file.
+8. Generate DOCX from the complete protocol Markdown source file if delivering Word, then run style unification.
 
 ## Review Workflow
 

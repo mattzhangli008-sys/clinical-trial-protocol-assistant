@@ -106,11 +106,12 @@ This skill can read and edit Word documents. Prefer scripts for repeatable docum
 
 - `scripts/extract_materials.py`: extract text/tables from docx, xlsx, csv, pdf, pptx, txt, and md into one material index.
 - `scripts/extract_docx.py`: extract headings, paragraphs, tables, comments/tracked-change text where available.
+- `scripts/markdown_to_docx.py`: convert the confirmed protocol Markdown source file into DOCX without model-written generation scripts.
 - `scripts/style_unify_docx.py`: apply baseline protocol/report styles to a DOCX.
 
 For advanced Word creation, rendering, comments, or redlines, also use the built-in `documents` skill/plugin instructions. Preserve original documents; write modified files to a new output path.
 
-In create mode, final DOCX content must be converted or rendered from the complete confirmed protocol Markdown file. Use the model only for formatting decisions, consistency notes, and document mechanics; do not rewrite or invent protocol content while creating Word.
+In create mode, final DOCX content must be converted from the complete confirmed protocol Markdown file using `scripts/markdown_to_docx.py`, then optionally refined with `scripts/style_unify_docx.py`. Do not ask the model to write a new DOCX-generation script, and do not rewrite or invent protocol content while creating Word.
 
 When running these scripts in Codex Desktop, prefer the bundled workspace Python from `load_workspace_dependencies`; system Python may not include all requirements. For published or external installs, create an environment and install `requirements.txt`.
 

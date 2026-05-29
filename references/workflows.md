@@ -28,7 +28,7 @@ Hard gate: after the user confirms necessary/recommended/optional sections, do n
    - user confirms/revises
    - immediately write the confirmed section into the protocol Markdown source file
 7. Cross-section consistency check using the complete protocol Markdown source file.
-8. Generate DOCX from the complete protocol Markdown source file if delivering Word, then run style unification.
+8. Generate DOCX from the complete protocol Markdown source file with `scripts/markdown_to_docx.py` if delivering Word, then run style unification if needed.
 
 ## Review Workflow
 

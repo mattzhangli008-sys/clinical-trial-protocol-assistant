@@ -62,7 +62,8 @@ Review mode:
 Create mode:
 
 - Generate clean protocol DOCX only after section content is confirmed and saved into the protocol Markdown source file.
-- Use the complete protocol Markdown file as the only content source for DOCX generation. Do not ask the model to recreate, expand, summarize, or reinterpret confirmed sections while building Word.
+- Use `scripts/markdown_to_docx.py <protocol_md_path> --out <output.docx>` as the default DOCX generation path.
+- Use the complete protocol Markdown file as the only content source for DOCX generation. Do not ask the model to recreate, expand, summarize, reinterpret confirmed sections, or write a new DOCX-generation script while building Word.
 - If the Markdown file is incomplete or missing confirmed sections, stop and update the Markdown source before creating DOCX.
 - Keep `[待确认]`, `[TBD]`, and unresolved placeholders visible.
 

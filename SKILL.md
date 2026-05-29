@@ -14,6 +14,11 @@ Use this skill to create or review clinical trial protocols. It supports two wor
 
 Use external evidence and Word tooling when needed. Do not rely only on model memory for medical, safety, regulatory, endpoint, trial-design, sample-size, or RWE claims.
 
+## Output Style
+
+- When drafting protocol content in Chinese, use Chinese numeric section headings such as `一、二、三、四` for generated protocol sections and subsections. Do not use `A、B、C、D` as generated section numbering. Internal module IDs such as `A1`, `B1`, and `C2` may be used only in planning tables or workflow status blocks.
+- If generated content uses literature or external records retrieved during the task, add citation markers immediately after the supported sentence or paragraph, using bracketed numeric markers such as `[1]`, `[2]`. Include a matching references list or evidence record in the same response or final document section. Do not add citation markers for unsupported claims, and do not fabricate citations.
+
 ## First Decision
 
 Determine the mode:
@@ -64,7 +69,7 @@ Do not generate a full protocol immediately after the user confirms the outline.
    - If P1 is inferred, confirm with the user.
    - If P2 is missing, draft with `[待确认]` only if acceptable.
 7. Check `external_data_needs` for the section. Retrieve evidence when required or recommended.
-8. Draft the section, then ask the user to confirm, revise, or regenerate.
+8. Draft the section with citation markers for any searched literature or external records used, then ask the user to confirm, revise, or regenerate.
 9. After all included sections are confirmed, run cross-section consistency checks.
 10. If delivering Word, run Word style unification.
 
@@ -81,7 +86,7 @@ Do not jump from a document to final review findings. After extraction, first sh
    - Ask the user only for missing or unclear answers that affect the section review.
    - If P2 is missing, do not block review; flag it as a recommendation.
    - If P0 is missing and user cannot answer, provide a limited review with limitations.
-7. Use external evidence to verify claims where needed; do not rewrite the user's text wholesale.
+7. Use external evidence to verify claims where needed; cite searched literature or external records with inline markers when they support review findings; do not rewrite the user's text wholesale.
 8. Output findings as issue, source evidence, risk, recommendation, and small suggested edit.
 9. If delivering Word, preserve the user's structure and run style unification or comments/redlines only as requested.
 

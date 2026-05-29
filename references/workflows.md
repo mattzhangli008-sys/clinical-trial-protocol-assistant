@@ -24,7 +24,7 @@ Hard gate: after the user confirms necessary/recommended/optional sections, do n
    - confirm P1 assumptions
    - mark P2 placeholders
    - retrieve required/recommended evidence
-   - draft
+   - draft with Chinese numeric headings (`一、二、三、四`) and inline citation markers for retrieved evidence
    - user confirms/revises
 7. Cross-section consistency check.
 8. Word style unification if delivering DOCX.
@@ -44,7 +44,7 @@ Hard gate: after extracting a document, do not immediately produce final finding
    - consult any additional uploaded materials before asking the user
    - ask about missing or unclear blocking items
    - retrieve external evidence when needed
-   - generate findings
+   - generate findings with inline citation markers when retrieved evidence supports a finding
    - keep suggested edits small
 8. Deliver chat report, Word report, or commented/redlined Word as requested.
 

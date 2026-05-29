@@ -38,7 +38,17 @@ Record:
 - query
 - retrieval date
 - records used
+- citation number used in generated text, if cited
 - key extracted points
 - limitations
 - user confirmation needed
 
+## Citation Markers
+
+When retrieved literature, trial records, labels, guidelines, or other external records are used to support generated content:
+
+- Number cited sources in order of first use: `[1]`, `[2]`, `[3]`.
+- Put the marker immediately after the supported sentence or paragraph, not only at the end of the whole section.
+- Keep the same number for repeated use of the same source.
+- Provide a matching references list or evidence record with enough information to identify the source, such as title, registry ID, label/source name, year/date, URL or PMID/NCT number when available, and retrieval date.
+- Do not cite sources that were not actually retrieved or provided by the user.
